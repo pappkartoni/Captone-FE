@@ -1,0 +1,79 @@
+:root {
+    --purple: #bfb0d1;
+    --blue: #4adee6;
+    --orange: #fabc90;
+    --green: #baedb4;
+
+    --creole: #170b04;
+    --oregon: #943404;
+    --stage: #cf5906;
+    --tahiti: #ef7206;
+    --ebony: #060514;
+
+    --stagel: #faa56a;
+    --textl: #dfdfdf;
+
+    --fall1: #fdeedc;
+    --fall2: #ffd8a9;
+    --fall3: #f1a661;
+    --fall4: #e38b28; 
+}
+
+body {
+    background-color: var(--fall2);
+    color: var(--textl);
+}
+
+.btn.btn-primary {
+    background-color: var(--tahiti);
+    border-radius: 50px;
+    border: none;
+}
+.btn.btn-primary:hover {
+    background-color: var(--stage);
+}
+
+.navi {
+    background-color: var(--fall4);
+}
+
+section {
+    background-color: var(--fall3);
+    box-shadow: 0px 0px 5px 0px var(--ebony);
+    border-radius: 5px;
+    padding: 5px;
+    text-align: center;
+}
+
+.game-wrapper {
+    border: 1px solid var(--fall1);
+    margin-block: 5px;
+}
+.carousel.slide {
+    height: 500px;
+}
+.carousel-inner, .carousel-item {
+    height: 100%;
+}
+.carousel-wrapper {
+    width: 100%;
+    height: 100%;
+}
+.carousel-wrapper > img {
+    margin: 0 auto;
+    width: auto;
+    display: block;
+    max-height: 100%;
+/*     object-fit: contain;
+    max-width: 100%; */
+    /* width: 100%; */
+}
+
+.offer-wrapper {
+    width: 40px;
+    height: 40px;
+}
+.offer-wrapper > img {
+    width: 100%;
+    object-fit: cover;
+}
