@@ -1,8 +1,6 @@
 import { Col, Container, Row } from "react-bootstrap"
 import { useAppSelector } from "../../redux/hooks"
 import Navi from "../main/Navi"
-import Game from "../main/Game"
-import { useParams } from "react-router-dom"
 import GameComponent from "../main/Game"
 
 const OwnGames = () => {

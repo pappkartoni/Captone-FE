@@ -1,7 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { User } from "../interface";
-import { useAppDispatch } from "../hooks";
-import { updateGame } from "../reducers/allGamesSlice";
 
 export const getUserData = createAsyncThunk(
     "user/getUserInfo",
@@ -290,7 +288,6 @@ export const editGameWithImages = createAsyncThunk(
     async (gameData: {_id: string, data: {name: string, description: string, asking: number, variance: number}, images: FileList | null}, thunkAPI) => {
         try {
             console.log("we got", JSON.stringify(gameData.data))
-            const dispatch = useAppDispatch()
             const res = await fetch(`${process.env.REACT_APP_BE_URL}/games/${gameData._id}`, {
                 headers: {
                     Authorization: `Bearer ${window.localStorage.getItem("accessToken")}`,
@@ -320,7 +317,7 @@ export const editGameWithImages = createAsyncThunk(
                             return game
                         }
                     } catch (error) {
-                        
+                        return thunkAPI.rejectWithValue(error);
                     }
                 } else {
                     return data
@@ -347,7 +344,6 @@ export const makeOffer = createAsyncThunk(
             if (res.ok) {
                 const data = await res.json()
                 return data
-                console.log(data)
             }
         } catch (error) {
             return thunkAPI.rejectWithValue(error);
