@@ -1,5 +1,5 @@
 :root {
-    --purple: #bfb0d1;
+    --purple: #d85d5d;
     --blue: #4adee6;
     --orange: #fabc90;
     --green: #baedb4;
@@ -12,18 +12,22 @@
 
     --stagel: #faa56a;
     --textl: #dfdfdf;
+    --text2: #312822;
 
     --fall1: #fdeedc;
     --fall2: #ffd8a9;
     --fall3: #f1a661;
     --fall4: #e38b28; 
+    --fall5: #df924b;
 }
 
 body {
     background-color: var(--fall2);
-    color: var(--textl);
+    color: var(--creole);
 }
-
+h1 {
+    margin-bottom: 10px;
+}
 .btn.btn-primary {
     background-color: var(--tahiti);
     border-radius: 50px;
@@ -39,19 +43,12 @@ body {
 
 section {
     background-color: var(--fall3);
-    box-shadow: 0px 0px 5px 0px var(--ebony);
+    /* box-shadow: 0px 0px 5px 0px var(--ebony); */
     border-radius: 5px;
     padding: 5px;
     text-align: center;
 }
 
-.game-wrapper {
-    border: 1px solid var(--fall1);
-    margin-block: 5px;
-}
-.carousel.slide {
-    height: 500px;
-}
 .carousel-inner, .carousel-item {
     height: 100%;
 }
@@ -64,16 +61,270 @@ section {
     width: auto;
     display: block;
     max-height: 100%;
+    object-fit: fill;
 /*     object-fit: contain;
     max-width: 100%; */
     /* width: 100%; */
 }
 
 .offer-wrapper {
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
 }
 .offer-wrapper > img {
     width: 100%;
+    height: 100%;
     object-fit: cover;
 }
+
+.offer-to, .offer-by {
+    background-color: var(--fall2);
+    border-radius: 5px;
+    padding: 10px;
+    min-width: 40%;
+}
+
+.accepted {
+    background-color: var(--green);
+}
+.status-accepted {
+    color: var(--green)
+}
+.status-pending {
+    color: var(--textl)
+}
+.status-declined {
+    color: var(--purple)
+}
+.pending {
+    background-color: var(--orange);
+}
+.declined {
+    background-color: var(--purple);
+}
+
+.profile-avatar {
+    display: block;
+    width: 200px;
+    margin: 0 auto;
+}
+
+.navi-search {
+    border: 0;
+    border-radius: 50px;
+    padding-inline: 10px 5px;
+    margin-right: 5px;
+}
+
+.main-owngame {
+    border-bottom: 1px solid var(--fall2);
+    padding: 5px;
+    width: calc(100% + 10px);
+    align-self: center;
+}
+
+.own-games, .new-games {
+    display: flex;
+    flex-direction: column;
+}
+
+.main-owngame:last-of-type, .main-owngame:last-of-type:hover {
+    border-bottom: 0;
+}
+
+.main-owngame:hover {
+    background-color: var(--fall2);
+    color: var(--creole);
+    /* border-bottom: 1px solid var(--creole); */
+    box-shadow: 2px 2px 5px 0px var(--ebony);
+    cursor: pointer
+}
+.new-games .img-wrapper {
+    height: 100%;
+}
+.new-games .img-wrapper img {
+    width: auto;
+    max-height: 100%;
+    max-width: 100%;
+    object-fit: cover;
+}
+
+.game-wrapper {
+    background-color: var(--fall3);
+    /* border-block: 1px solid var(--fall1); */
+    /* margin-block: 5px; */
+    width: calc(100% + 10px);
+    align-self: center;
+    text-align: left;
+    border-top: 1px solid var(--fall2);
+    /* box-shadow: 0px 1px 5px 0px var(--ebony); */
+}
+
+.game-wrapper:hover {
+    background-color: var(--fall2);
+    color: var(--ebony);
+    cursor: pointer;
+    box-shadow: 3px 3px 5px 0px var(--ebony);
+    z-index: 2;
+}
+
+nav {
+    box-shadow: 0px 0px 5px 0px var(--ebony);
+}
+
+.left .game-info {
+    padding-left: 0;
+}
+
+.right .game-info {
+    padding-left: 20px;
+}
+
+@media (max-width: 991px) {
+    .left .game-info {
+        padding: 10px 20px;
+    }
+}
+
+.owner {
+    margin-top: auto;
+    font-size: 12px;
+}
+
+.game-details {
+    padding: 10px;
+}
+
+.description {
+    background-color: var(--fall2);
+    min-height: 200px;
+    padding: 10px;
+    text-align: left;
+    border-radius: 5px;
+}
+
+.game-info h2 {
+    text-align: center;
+    font-size: 36px;
+    margin-block: 10px;
+}
+
+.game-info {
+    text-align: left;
+}
+.owner-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 10px;
+}
+.owner-info .img-wrapper {
+    max-width: 200px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-block: 20px;
+}
+
+.owner-info h4 {
+    color: var(--text2);
+    font-size: 20px;
+}
+.owner-info h4:hover {
+    cursor: pointer;
+}
+.owner-info .img-wrapper:hover {
+    cursor: pointer;
+    box-shadow: 3px 3px 5px 0px var(--creole);
+}
+.user-edit .form-label {
+    font-size: 20px;
+    font-weight: 400;
+}
+
+.left-edit, .right-edit, .user-left, .user-right {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.right-edit .img-wrapper, .user-right .img-wrapper {
+    border-radius: 50%;
+    width: 300px;
+    margin-inline: auto;
+    margin-block: 10px;
+}
+.right-edit .img-wrapper:hover, .user-right .img-wrapper:hover {
+    box-shadow: 3px 3px 5px 0px var(--creole);
+}
+textarea {
+    min-height: 200px!important;
+    resize: none;
+}
+.profile-sec {
+    padding: 10px;
+}
+.profile-trade:hover {
+    cursor: pointer;
+}
+.user-info-field {
+    text-align: left;
+    background-color: var(--fall2);
+    padding: 10px;
+    border-radius: 5px;
+}
+.about {
+    min-height: 200px;
+}
+.form-control {
+    background-color: var(--fall2);
+}
+.trade:hover {
+    box-shadow: 2px 2px 5px 0px var(--creole);
+    z-index: 5;
+}
+.trade-game {
+    margin-bottom: 2px;
+}
+.trade-game:hover {
+    box-shadow: 2px 2px 5px 0px var(--creole);
+    cursor: pointer;
+    background-color: var(--fall2);
+}
+.main-offers {
+    display: flex;
+    flex-direction: column;
+}
+.main-offers .trade-game {
+    width: calc(100% + 8px);
+    align-self: center;
+}
+.form-check {
+    text-align: left;
+}
+.btn:disabled,button[disabled]{
+    cursor: pointer;
+  }
+ .offer-details .img-wrapper {
+    width: 50px;
+    height: 50px;
+ }
+ .new-game form {
+    text-align: left;
+ }
+ .new-game .form-label, .edit-game .form-label {
+    margin-top: 10px;
+    font-weight: 500;
+ }
+ .new-game .btn, .edit-game .btn {
+    margin-top: 15px;
+ }
+ .edit-images img {
+    width: 50%;
+    cursor:not-allowed
+ }
+ .edit-game section > div {
+    text-align: left;
+ }
+ .edit-game section {
+    padding: 10px;
+ }

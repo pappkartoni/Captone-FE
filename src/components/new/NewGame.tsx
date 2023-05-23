@@ -18,8 +18,6 @@ const NewGame = () => {
 
     const handleSubmit = (e:  FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        console.log(newGame)
-        console.log(images)
         if (images)
         dispatch(newGameWithImages({data: newGame, images: images}))
         navigate("/")
@@ -28,25 +26,25 @@ const NewGame = () => {
         <>
             <Navi />
             <Container className="mt-5">
-            <section className="p-3">
                 <Row className="justify-content-center">
                     <Col xs={12} lg={6}>
-                        <h2>New Offer</h2>
+                    <section className="p-3 new-game">
+                        <h2>Add a game</h2>
                         <Form onSubmit={handleSubmit}>
                             <Form.Group>
-                                <Form.Label>Name</Form.Label>
+                                <Form.Label>What's it called?</Form.Label>
                                 <Form.Control type="text" value={newGame.name} placeholder="Add a name for the game"
                                     onChange={(e) => setNewGame({...newGame, name: e.target.value})}
                                 />
                             </Form.Group>
                             <Form.Group>
-                                <Form.Label>Description</Form.Label>
-                                <Form.Control type="textarea" value={newGame.description} placeholder="Add a description"
+                                <Form.Label>Describe it (condition, extras etc.)</Form.Label>
+                                <Form.Control as="textarea" value={newGame.description} placeholder="Add a description"
                                     onChange={(e) => setNewGame({...newGame, description: e.target.value})}
                                 />
                             </Form.Group>
                             <Form.Group>
-                                <Form.Label>Asking</Form.Label>
+                                <Form.Label>How do you value it?</Form.Label>
                                 <Form.Control type="number" value={newGame.asking} placeholder="Add an estimate"
                                     onChange={(e) => setNewGame({...newGame, asking: parseFloat(e.target.value)})}
                                     />
@@ -58,16 +56,16 @@ const NewGame = () => {
                                     />
                             </Form.Group>
                             <Form.Group>
-                                <Form.Label>Pictures</Form.Label>
+                                <Form.Label>Image(s)</Form.Label>
                                 <Form.Control className="im-upload" type="file" accept="image/*" multiple
                                     onChange={(e: any) => setImages(e.target.files)}
                                     />
                             </Form.Group>
                         <Button type="submit">Submit</Button>
                         </Form>
+                    </section>
                     </Col>
                 </Row>
-            </section>
             </Container>
         </>
     )

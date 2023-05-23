@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { Game } from "../interface";
-import { allOwnGames, newGameWithImages } from "../actions";
+import { allOwnGames, editGameWithImages, newGameWithImages } from "../actions";
 
 const initialState = {
     games: [] as Game[]
@@ -25,6 +25,13 @@ export const ownGamesSlice = createSlice({
             })
             builder.addCase(allOwnGames.fulfilled, (state, action) => {
                 state.games = action.payload
+            })
+            builder.addCase(editGameWithImages.fulfilled, (state, action) => {
+                const i = state.games.findIndex(g => g._id === action.payload._id)
+                console.log("we here", i, action.payload)
+                if (i !== -1)
+                state.games = [...state.games.slice(0, i), action.payload, ...state.games.slice(i + 1)]
+                console.log(state.games)
             })
         }
 })

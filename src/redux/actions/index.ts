@@ -1,21 +1,23 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { User } from "../../assets/interfaces/user";
+import { User } from "../interface";
+import { useAppDispatch } from "../hooks";
+import { updateGame } from "../reducers/allGamesSlice";
 
 export const getUserData = createAsyncThunk(
     "user/getUserInfo",
     async (_, thunkAPI) => {
         try {
             const res = await fetch(`${process.env.REACT_APP_BE_URL}/users/me`, {
-            headers: {
-                Authorization: `Bearer ${window.localStorage.getItem("accessToken")}`,
-            },
-            });
+                headers: {
+                    Authorization: `Bearer ${window.localStorage.getItem("accessToken")}`,
+                },
+            })
     
             if (res.ok) {
             return (await res.json()) as User;
             } else if (res.status === 401) {
             // access token has expired or is invalid, refresh access token
-            await refreshAccessToken();
+            await refreshAccessToken()
     
             // try to get user data again
             const newAccessToken = localStorage.getItem("accessToken");
@@ -34,28 +36,76 @@ export const getUserData = createAsyncThunk(
                 }
             }
     
-            return thunkAPI.rejectWithValue(new Error("Failed to get user data"));
+            return thunkAPI.rejectWithValue(new Error("Failed to get user data"))
             } else {
-            return thunkAPI.rejectWithValue(new Error("Failed to get user data"));
+            return thunkAPI.rejectWithValue(new Error("Failed to get user data"))
             }
         } catch (error) {
-            return thunkAPI.rejectWithValue(error);
+            return thunkAPI.rejectWithValue(error)
         }
     }
-);
+)
+
+export const editUserData = createAsyncThunk(
+    "user/editUserData",
+    async (userData: {data: User, image: File | null}, thunkAPI) => {
+        try {
+            const res = await fetch(`${process.env.REACT_APP_BE_URL}/users/me`, {
+                headers: {
+                    Authorization: `Bearer ${window.localStorage.getItem("accessToken")}`,
+                    "Content-Type": "application/json"
+                },
+                method: "PUT",
+                body: JSON.stringify(userData.data)
+            })
+            if (res.ok) {
+                const data = await res.json()
+                
+                if (userData.image) {
+                    const formData = new FormData()
+                    formData.append("avatar", userData.image)
+                    try {
+                        const res = await fetch(`${process.env.REACT_APP_BE_URL}/users/me/avatar`, {
+                            headers: {
+                                Authorization: `Bearer ${window.localStorage.getItem("accessToken")}`,
+                            },
+                            method: "POST",
+                            body: formData
+                        })
+                        console.log("bla")
+                        if (res.ok) {
+                            const data = await res.json()
+                            return data
+                        } else {
+                            return thunkAPI.rejectWithValue(new Error("Couldn't update your profile"))
+                        }
+                    } catch (error) {
+                        return thunkAPI.rejectWithValue(error)
+                    }
+                } else {
+                    return data
+                }
+            } else {
+                return thunkAPI.rejectWithValue(new Error("Couldn't update your profile"))
+            }
+        } catch (error) {
+            return thunkAPI.rejectWithValue(error)
+        }
+    }
+)
 
 export const getAllUsers = createAsyncThunk(
     "users/getAllUsers",
     async (_, thunkAPI) => {
         try {
-            const res = await fetch(`${process.env.REACT_APP_BE_URL}/users`);
+            const res = await fetch(`${process.env.REACT_APP_BE_URL}/users`)
         
             if (res.ok) {
                 const data = await res.json() as User[]
                 return data
             }
         } catch (error) {
-            return thunkAPI.rejectWithValue(error);
+            return thunkAPI.rejectWithValue(error)
         }
     }
 )
@@ -73,7 +123,7 @@ export const allOwnGames = createAsyncThunk(
                 const data = await res.json()
                 return data
             } else {
-                return thunkAPI.rejectWithValue(new Error("Failed to get your own games"));
+                return thunkAPI.rejectWithValue(new Error("Failed to get your own games"))
 
             }
         } catch (error) {
@@ -95,10 +145,10 @@ export const sentOffers = createAsyncThunk(
                 const data = await res.json()
                 return data
             } else {
-                return thunkAPI.rejectWithValue(new Error("Failed to get offers you sent"));
+                return thunkAPI.rejectWithValue(new Error("Failed to get offers you sent"))
             }
         } catch (error) {
-            return thunkAPI.rejectWithValue(error);
+            return thunkAPI.rejectWithValue(error)
         }
     }
 )
@@ -117,6 +167,51 @@ export const recievedOffers = createAsyncThunk(
                 return data
             } else {
                 return thunkAPI.rejectWithValue(new Error("Failed to get offers you recieved"));
+            }
+        } catch (error) {
+            return thunkAPI.rejectWithValue(error);
+        }
+    }
+)
+
+export const acceptOffer = createAsyncThunk(
+    "offers/accept",
+    async (id: String, thunkAPI) => {
+        try {
+            const res = await fetch(`${process.env.REACT_APP_BE_URL}/offers/${id}/accept`, {
+                headers: {
+                    Authorization:  `Bearer ${window.localStorage.getItem("accessToken")}`,
+                },
+                method: "PUT"
+            })
+            if (res.ok) {
+                const data = await res.json()
+                return data
+            } else {
+                return thunkAPI.rejectWithValue(new Error("Failed to accept offer"));
+            }
+        } catch (error) {
+            return thunkAPI.rejectWithValue(error);
+        }
+    }
+)
+
+export const declineOffer = createAsyncThunk(
+    "offers/decline",
+    async (id: String, thunkAPI) => {
+        try {
+            const res = await fetch(`${process.env.REACT_APP_BE_URL}/offers/${id}/decline`, {
+                headers: {
+                    Authorization:  `Bearer ${window.localStorage.getItem("accessToken")}`,
+                },
+                method: "PUT"
+            })
+            if (res.ok) {
+                const data = await res.json()
+                console.log(data)
+                return data
+            } else {
+                return thunkAPI.rejectWithValue(new Error("Failed to decline offer"));
             }
         } catch (error) {
             return thunkAPI.rejectWithValue(error);
@@ -190,6 +285,53 @@ export const newGameWithImages = createAsyncThunk(
     }
 )
 
+export const editGameWithImages = createAsyncThunk(
+    "games/editGameWithImages",
+    async (gameData: {_id: string, data: {name: string, description: string, asking: number, variance: number}, images: FileList | null}, thunkAPI) => {
+        try {
+            console.log("we got", JSON.stringify(gameData.data))
+            const dispatch = useAppDispatch()
+            const res = await fetch(`${process.env.REACT_APP_BE_URL}/games/${gameData._id}`, {
+                headers: {
+                    Authorization: `Bearer ${window.localStorage.getItem("accessToken")}`,
+                    "Content-Type": "application/json",
+                },
+                method: "PUT",
+                body: JSON.stringify(gameData.data)
+            })
+            if (res.ok) {
+                const data = await res.json()
+                if (gameData.images) {
+                    const formData = new FormData()
+                    console.log(Array.from(gameData.images));
+                    
+                    Array.from(gameData.images).forEach(f => formData.append("gameimages", f))
+                    console.log("here we go ahgaiun", formData, gameData.images)
+                    try {
+                        const res = await fetch(`${process.env.REACT_APP_BE_URL}/games/${data._id}/images`, {
+                            headers: {
+                                Authorization: `Bearer ${window.localStorage.getItem("accessToken")}`,
+                            },
+                            method: "POST",
+                            body: formData
+                        })
+                        if (res.ok) {
+                            const game = await res.json()
+                            return game
+                        }
+                    } catch (error) {
+                        
+                    }
+                } else {
+                    return data
+                }
+            }
+        } catch (error) {
+            return thunkAPI.rejectWithValue(error);
+        }
+    }
+)
+
 export const makeOffer = createAsyncThunk(
     "offers/newOffer",
     async (data: {to: string, for: string, offer: string[]}, thunkAPI) => {
@@ -204,7 +346,7 @@ export const makeOffer = createAsyncThunk(
             })
             if (res.ok) {
                 const data = await res.json()
-
+                return data
                 console.log(data)
             }
         } catch (error) {

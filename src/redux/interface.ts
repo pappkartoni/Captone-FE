@@ -13,7 +13,9 @@ export interface User {
     name: string,
     email: string,
     avatar?: string,
-    trades: number
+    trades: number,
+    about?: string,
+    location?: Location
 }
 
 export interface Offer {
@@ -23,4 +25,11 @@ export interface Offer {
     game: Game,
     offer: Game[]
     status: string,
+}
+
+export interface Location {
+    name: string,
+    lat: number,
+    lon: number,
+    country: string
 }

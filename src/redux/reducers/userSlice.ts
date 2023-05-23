@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { User } from "../../assets/interfaces/user";
-import { getUserData } from "../actions";
+import { editUserData, getUserData } from "../actions";
+import { User } from "../interface";
 
 const initialState =  {
     user: {
@@ -9,6 +9,7 @@ const initialState =  {
         name: "",
         email: "",
         avatar: "",
+        trades: 0,
     } as User
 };
 
@@ -26,6 +27,10 @@ export const userSlice = createSlice({
         },
         extraReducers: (builder) => {
             builder.addCase(getUserData.fulfilled, (state, action) => {
+                console.log(action.payload)
+                state.user = action.payload
+            })
+            builder.addCase(editUserData.fulfilled, (state, action) => {
                 console.log(action.payload)
                 state.user = action.payload
             })

@@ -11,10 +11,12 @@ export const allGamesSlice = createSlice({
     name: "allGames",
     initialState,
     reducers: {
-/*         setUser: (state, action: PayloadAction<Game>) => {
-            console.log("setting user")
-            state.games = action.payload;
-        }, */
+        updateGame: (state, action: PayloadAction<Game>) => {
+            const i = state.games.findIndex(g => g._id === action.payload._id)
+            if (i !== -1)
+            state.games = [...state.games.slice(0, i), action.payload, ...state.games.slice(i + 1)]
+        }
+
         },
         extraReducers: (builder) => {
             builder.addCase(newGameWithImages.fulfilled, (state, action) => {
@@ -29,6 +31,6 @@ export const allGamesSlice = createSlice({
         }
 })
 
-export const {  } = allGamesSlice.actions;
+export const {updateGame} = allGamesSlice.actions;
 
 export default allGamesSlice.reducer;
